@@ -1,0 +1,32 @@
+{
+    "apps": [
+        {
+            "name": "production",
+            "script": "./dist/app.js",
+            "exec_mode": "cluster",
+            "instances": -1,
+            "env": {
+                "NODE_ENV": "production"
+            }
+        },
+        {
+            "name": "development",
+            "script": "./ts/app.ts",
+            "exec_mode": "cluster",
+            "instances": 1,
+            "interpreter": "./node_modules/.bin/ts-node",
+            "watch": true,
+            "ignore_watch": [
+                "node_modules",
+                "dist",
+                ".gitignore",
+                ".git",
+                "Database"
+            ],
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": 8080
+            }
+        }
+    ]
+}
