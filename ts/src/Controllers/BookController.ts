@@ -24,16 +24,20 @@ export class BookController implements IController {
     public async FetchBooks(req: Request, res: Response): Promise<void> {
         try {
             if (req.params.id) {
-                const id = parseInt(req.params.id as string);
-                const book = await this.Repository.FetchBooks(id);
+                const book = await this.Repository.FetchBook(parseInt(req.params.id as string));
                 if (book) {
                     res.status(200).json(book);
                 } else {
                     res.status(404).json({ info: "Book not found or does not exists" });
                 }
             } else {
-                const books = await this.Repository.FetchBooks();
-                res.status(200).json(books);
+                const books = await this.Repository.FetchBooks(parseInt(req.query.page as string));
+                if (books?.length == 0) {
+                    console.log("Vacio")
+                    res.status(200).json({ info: "No more books to show" });
+                } else {
+                    res.status(200).json(books);
+                }
             }
         } catch (err) {
             throw (err);
@@ -44,7 +48,7 @@ export class BookController implements IController {
         try {
             const book: Book = req.body;
             await this.Repository.AddBook(book);
-            res.status(200).json(book);
+            res.status(201).json(book);
         } catch (err) {
             throw (err);
         }

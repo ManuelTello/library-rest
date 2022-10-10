@@ -8,15 +8,19 @@ export class BookRepository {
         this.EntityRepo = context.getRepository(Book);
     }
 
-    public async FetchBooks(id?: number): Promise<Array<Book> | Book | undefined | null> {
+    public async FetchBooks(page: number): Promise<Array<Book> | null> {
         try {
-            if (id) {
-                const book = await this.EntityRepo.findOne({ where: { Id: id } });
-                return book;
-            } else {
-                const books = await this.EntityRepo.find();
-                return books;
-            }
+            const books = await this.EntityRepo.find({ skip: 2 * page, take: 2 });
+            return books;
+        } catch (err) {
+            throw (err);
+        }
+    }
+
+    public async FetchBook(id: number): Promise<Book | null> {
+        try {
+            const book = await this.EntityRepo.findOne({ where: { Id: id } });
+            return book;
         } catch (err) {
             throw (err);
         }
@@ -32,7 +36,7 @@ export class BookRepository {
 
     public async DeleteBook(id: number): Promise<null | Book> {
         try {
-            const book: Book | undefined | null = await this.FetchBooks(id) as Book;
+            const book: Book | null = await this.FetchBook(id) as Book;
             if (book) {
                 this.EntityRepo.delete(id);
                 return book;

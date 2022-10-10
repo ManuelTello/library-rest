@@ -33,7 +33,7 @@ class ServerInstance {
     }
 
     private StartControllersRoutes(controllers: Array<IController>): void {
-        controllers.forEach(({ Router, Path }) => this.Application.use(`/${Path}`, Router));
+        controllers.forEach(({ Router, Path }) => this.Application.use(`/api/${Path}`, Router));
         this.Application.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             console.log("Error: ", err.message);
             res.status(500).json({ info: "Your request could not be processed" });
@@ -41,5 +41,5 @@ class ServerInstance {
     }
 }
 
-
-ServerInstance.GetInstance().StartServerInstance(new AppDbContext().GetContext());
+const Context = new AppDbContext();
+ServerInstance.GetInstance().StartServerInstance(Context.GetContext());
