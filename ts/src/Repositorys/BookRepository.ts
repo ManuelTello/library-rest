@@ -1,5 +1,6 @@
-import { DataSource, Repository } from "typeorm";
+import { DataSource, FindOptionsWhere, Repository } from "typeorm";
 import { Book } from "../Models/Book";
+import { books_request as bookquery } from "../Types/RequestTypes";
 
 export class BookRepository {
     private readonly EntityRepo: Repository<Book>;
@@ -8,9 +9,14 @@ export class BookRepository {
         this.EntityRepo = context.getRepository(Book);
     }
 
-    public async FetchBooks(page: number): Promise<Array<Book> | null> {
+    public async FetchBooks(page: number, query?: bookquery): Promise<Array<Book> | null> {
         try {
-            const books = await this.EntityRepo.find({ skip: 2 * page, take: 2 });
+            const where_query: FindOptionsWhere<Book> = {
+                Title: query?.title,
+                Author: query?.author,
+                Genre: query?.genre
+            };
+            const books = await this.EntityRepo.find({ skip: 2 * page, take: 2, where: where_query });
             return books;
         } catch (err) {
             throw (err);

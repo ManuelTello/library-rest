@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { IController } from "../Interfaces/IController";
 import { Book } from "../Models/Book";
 import { BookRepository } from "../Repositorys/BookRepository";
+import { books_request as bookquery } from "../Types/RequestTypes";
 
 export class BookController implements IController {
     public Router: Router = Router();
@@ -25,19 +26,11 @@ export class BookController implements IController {
         try {
             if (req.params.id) {
                 const book = await this.Repository.FetchBook(parseInt(req.params.id as string));
-                if (book) {
-                    res.status(200).json(book);
-                } else {
-                    res.status(404).json({ info: "Book not found or does not exists" });
-                }
+                res.status(book ? 200 : 404).json(book ? book : { info: "Book not found or does not exists" });
             } else {
-                const books = await this.Repository.FetchBooks(parseInt(req.query.page as string));
-                if (books?.length == 0) {
-                    console.log("Vacio")
-                    res.status(200).json({ info: "No more books to show" });
-                } else {
-                    res.status(200).json(books);
-                }
+                const query = { ...req.query as bookquery };
+                const books = await this.Repository.FetchBooks(query.page ? parseInt(req.query.page as string) : 0, query);
+                res.status(200).json(books?.length ? books : { info: "No more to show" });
             }
         } catch (err) {
             throw (err);

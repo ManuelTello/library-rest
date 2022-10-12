@@ -11,12 +11,16 @@ export class Book {
     @Column("varchar")
     public Author: string;
 
+    @Column("varchar")
+    public Genre: string;
+
     @Column("date")
     public DatePublished: Date
 
-    public constructor(title: string, author: string, datepublished: Date) {
+    public constructor(title: string, author: string, genre: string, datepublished: Date) {
         this.Title = title;
         this.Author = author;
+        this.Genre = genre;
         this.DatePublished = datepublished;
     }
 }
