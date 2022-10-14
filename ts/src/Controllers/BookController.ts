@@ -40,6 +40,7 @@ export class BookController implements IController {
     public async AddBook(req: Request, res: Response): Promise<void> {
         try {
             const book: Book = req.body;
+            console.log(book);
             await this.Repository.AddBook(book);
             res.status(201).json(book);
         } catch (err) {

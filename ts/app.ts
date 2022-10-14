@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { AppDbContext } from "./src/Context/AppDbContext";
 import { IController } from "./src/Interfaces/IController";
 import { BookController } from "./src/Controllers/BookController";
+import cors from "cors";
 
 
 class ServerInstance {
@@ -21,6 +22,7 @@ class ServerInstance {
     }
 
     public StartServerInstance(context_service: DataSource): void {
+        this.Application.use(cors());
         this.Application.listen(this.Port, () => {
             console.log(`Server up at localhost:${this.Port}`);
         });

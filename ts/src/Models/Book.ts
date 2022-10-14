@@ -8,7 +8,7 @@ export class Book {
     @Column("varchar")
     public Title: string;
 
-    @Column("varchar")
+    @Column({ type: "varchar", nullable: false })
     public Author: string;
 
     @Column("varchar")
