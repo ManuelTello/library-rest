@@ -5,16 +5,16 @@ export class Book {
     @PrimaryGeneratedColumn("increment")
     public Id?: number;
 
-    @Column("varchar")
+    @Column({ type: "varchar", nullable: false })
     public Title: string;
 
     @Column({ type: "varchar", nullable: false })
     public Author: string;
 
-    @Column("varchar")
+    @Column({ type: "varchar", nullable: false })
     public Genre: string;
 
-    @Column("date")
+    @Column({ type: "varchar", nullable: false })
     public DatePublished: Date
 
     public constructor(title: string, author: string, genre: string, datepublished: Date) {
