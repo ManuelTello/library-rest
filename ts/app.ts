@@ -36,6 +36,9 @@ class ServerInstance {
 
     private StartControllersRoutes(controllers: Array<IController>): void {
         controllers.forEach(({ Router, Path }) => this.Application.use(`/api/${Path}`, Router));
+        this.Application.use("*", (req: Request, res: Response, next: NextFunction) => {
+            res.status(404).json({ info: "The resource you'r trying to search doest not exists" });
+        });
         this.Application.use((err: Error, req: Request, res: Response, next: NextFunction) => {
             console.log("Error: ", err.message);
             res.status(500).json({ info: "Your request could not be processed" });
