@@ -7,7 +7,7 @@
     "start": "concurrently -m 1 \"pm2-runtime start ecosystem.config.json --only production\"",
     "develop": "pm2-runtime start ecosystem.config.json --only development",
     "build": "tsc",
-    "test:fetch:books": "jest"
+    "test:fetch:books": "jest fetch.books.test.ts"
   },
   "keywords": [ ],
   "author": "",
