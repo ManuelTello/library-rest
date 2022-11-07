@@ -9,7 +9,7 @@
     "build": "tsc",
     "test:fetch:books": "jest fetch.books.test.ts"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -21,8 +21,7 @@
     "pm2": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^29.0.3",
-    "typeorm": "^0.3.10",
-    "vue-router": "^4.1.5"
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
